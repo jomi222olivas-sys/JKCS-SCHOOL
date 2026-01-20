@@ -9,7 +9,7 @@
 ---
 
 ## 🌐 Live Demo
-**[CLICK HERE TO VIEW PROJECT](https://jomi222olivas-sys.github.io/jomi222olivas-sys/)** *(Note: Replace the link above with your actual GitHub Pages URL)*
+**[CLICK HERE TO VIEW PROJECT]((https://jomi222olivas-sys.github.io/JKCS-SCHOOL/))
 
 ---
 
