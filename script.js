@@ -1,8 +1,13 @@
 // 🕵️‍♂️ Secret Message for Developers
-console.log("%c Hello Dev! 👋 If you're looking at this, you found the logic behind the magic. Let's build something cool.", "color: #64ffda; font-size: 16px; font-weight: bold; background: #112240; padding: 10px; border-radius: 5px;");
+console.log("%c Hand-coded by Jose Olivas. 100% Grit.", "color: #64ffda; font-size: 16px; font-weight: bold; background: #112240; padding: 10px; border-radius: 5px;");
 
-// Typing Effect - Completando frases "I Build..."
-const phrases = ["Logic.", "Solutions.", "The Future.", "My Own Path."];
+// Typing Effect - STRATEGIC MESSAGING
+const phrases = [
+    "I Build Logic.",
+    "I Solve Problems.",
+    "I am a Young Scholar." 
+];
+
 let roleIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
@@ -36,39 +41,6 @@ function typeWriter() {
 }
 document.addEventListener('DOMContentLoaded', typeWriter);
 
-// Chart.js - Asegurando que cargue
-try {
-    const ctx = document.getElementById('skillsChart').getContext('2d');
-    new Chart(ctx, {
-        type: 'radar',
-        data: {
-            labels: ['HTML/CSS', 'Math/Algebra', 'Logic', 'Creativity', 'Debugging'],
-            datasets: [{
-                label: 'Skill Level',
-                data: [90, 85, 85, 95, 80],
-                backgroundColor: 'rgba(100, 255, 218, 0.2)',
-                borderColor: '#64ffda',
-                pointBackgroundColor: '#64ffda',
-                borderWidth: 2
-            }]
-        },
-        options: {
-            scales: {
-                r: {
-                    angleLines: { color: 'rgba(136, 146, 176, 0.2)' },
-                    grid: { color: 'rgba(136, 146, 176, 0.2)' },
-                    pointLabels: { color: '#8892b0', font: { size: 12 } },
-                    ticks: { display: false, backdropColor: 'transparent' }
-                }
-            },
-            plugins: { legend: { display: false } },
-            maintainAspectRatio: false
-        }
-    });
-} catch (error) {
-    console.error("Chart failed to load:", error);
-}
-
 // Bubble Sort Visualizer
 const container = document.getElementById("visualizer-container");
 let array = [];
@@ -91,7 +63,7 @@ async function startBubbleSort() {
     let bars = document.getElementsByClassName("bar");
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array.length - i - 1; j++) {
-            bars[j].style.background = "#e74c3c"; 
+            bars[j].style.background = "#e74c3c"; // Comparing Red
             bars[j+1].style.background = "#e74c3c";
             
             await new Promise(r => setTimeout(r, 100));
@@ -105,15 +77,15 @@ async function startBubbleSort() {
                 bars[j+1].style.height = `${array[j+1]}%`;
             }
             
-            bars[j].style.background = "#8892b0"; 
+            bars[j].style.background = "#8892b0"; // Reset
             bars[j+1].style.background = "#8892b0";
         }
-        bars[array.length - i - 1].style.background = "#64ffda"; 
+        bars[array.length - i - 1].style.background = "#64ffda"; // Sorted Green
     }
     bars[0].style.background = "#64ffda";
 }
 
-// Resource Finder Data (Sincronizado con HTML)
+// Resource Finder Data (Failsafe)
 const resources = [
     { name: "Palo Verde Library", type: "library", desc: "Quiet study area." },
     { name: "AMS Flower", type: "school", desc: "My academic base." },
@@ -125,7 +97,6 @@ function filterResources() {
     const filter = document.getElementById("resource-filter").value;
     const list = document.getElementById("resource-list");
     
-    // Limpiamos la lista para re-renderizar
     list.innerHTML = "";
     
     resources.filter(r => filter === "all" || r.type === filter).forEach(r => {
@@ -134,11 +105,8 @@ function filterResources() {
         li.style.padding = "8px 0";
         li.style.borderBottom = "1px solid rgba(136,146,176,0.1)";
         li.style.color = "var(--secondary)";
-        
-        // Colorear el nombre
         let strong = li.querySelector("strong");
         strong.style.color = "var(--primary)";
-        
         list.appendChild(li);
     });
 }
@@ -162,82 +130,6 @@ document.getElementById('music-btn').addEventListener('click', () => {
     alert("🎹 Practicing logic scales... (Imagine a cool synthwave track playing!)");
 });
 
-// Terminal Logic
+// Terminal Logic - THE INTERACTIVE BIOGRAPHY
 document.addEventListener('keydown', (e) => {
-    if (e.key === '~') toggleTerminal();
-});
-
-function toggleTerminal() {
-    const term = document.getElementById('terminal-overlay');
-    term.classList.toggle('hidden');
-    if (!term.classList.contains('hidden')) document.getElementById('terminal-input').focus();
-}
-
-document.getElementById('terminal-input').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        let cmd = this.value.toLowerCase().trim();
-        let output = document.getElementById('terminal-body');
-        
-        let prevLine = document.createElement('div');
-        prevLine.textContent = `jose@dev:~$ ${cmd}`;
-        prevLine.style.color = '#8892b0';
-        prevLine.style.marginTop = '10px';
-        output.insertBefore(prevLine, this.parentElement);
-
-        let response = document.createElement('div');
-        response.style.marginBottom = '10px';
-        response.style.lineHeight = '1.4';
-
-        // 🧠 LÓGICA PERSONALIZADA AQUI
-        switch(cmd) {
-            case 'help':
-                response.innerHTML = "Available commands: <br>- whoami: About me<br>- math: My math journey<br>- piano: My hobby<br>- school: Education<br>- clear: Clear screen<br>- exit: Close terminal";
-                break;
-            case 'whoami':
-                response.textContent = "Jose Olivas. 12yo. Future Engineer.";
-                break;
-            case 'math':
-                response.textContent = "🧮 Math is my playground. Taught myself Algebra in 6th grade because standard classes weren't fast enough.";
-                response.style.color = "#ffbd2e"; // Yellow
-                break;
-            case 'piano':
-                response.textContent = "🎹 Turning noise into music. Still looking for a teacher, but I learn by ear.";
-                response.style.color = "#ff5f56"; // Red
-                break;
-            case 'school':
-                response.textContent = "🏫 AMS Flower student. Top of the class, ready for more advanced challenges.";
-                response.style.color = "#27c93f"; // Green
-                break;
-            case 'clear':
-                Array.from(output.children).forEach(child => {
-                    if(!child.classList.contains('input-line')) child.style.display = 'none';
-                });
-                this.value = '';
-                return; 
-            case 'exit':
-                toggleTerminal();
-                this.value = '';
-                return;
-            default:
-                response.textContent = `Command not found: ${cmd}. Type 'help'.`;
-                response.style.color = '#ff5f56';
-        }
-        
-        output.insertBefore(response, this.parentElement);
-        this.value = '';
-        output.scrollTop = output.scrollHeight;
-    }
-});
-
-// Dark/Light Mode
-const toggleBtn = document.getElementById("theme-toggle");
-toggleBtn.addEventListener("click", () => {
-    const currentTheme = document.body.getAttribute("data-theme");
-    if (currentTheme === "light") {
-        document.body.setAttribute("data-theme", "dark");
-        toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-    } else {
-        document.body.setAttribute("data-theme", "light");
-        toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-    }
-});
+    if
