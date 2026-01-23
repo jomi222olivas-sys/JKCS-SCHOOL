@@ -70,8 +70,11 @@ h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
 
 .btn.primary { border: 1px solid var(--primary); color: var(--primary); margin-right: 15px; }
 .btn.primary:hover { background: rgba(100, 255, 218, 0.1); }
-.btn.secondary { color: var(--text-color); }
-.btn.small { font-size: 0.8rem; padding: 8px 16px; margin-top: 15px; }
+.btn.secondary { color: var(--text-color); border: 1px solid transparent; }
+.btn.secondary:hover { border: 1px solid var(--text-color); }
+
+.btn.small { font-size: 0.8rem; padding: 8px 16px; margin-top: 15px; border: 1px solid var(--secondary); color: var(--secondary); }
+.btn.small:hover { border-color: var(--primary); color: var(--primary); }
 
 /* Container & Grid */
 .container { max-width: 1000px; margin: 0 auto; padding: 50px 20px; }
@@ -109,6 +112,22 @@ h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
 .bar { background: var(--secondary); width: 100%; transition: height 0.2s, background 0.2s; }
 .bar.active { background: var(--primary); }
 
+/* Resource List */
+.resource-list { list-style: none; margin-top: 15px; }
+.resource-list li { color: var(--secondary); font-size: 0.9rem; }
+
+/* Quote Box */
+.quote-box {
+    background: rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 5px;
+    border-left: 3px solid var(--primary);
+    margin: 15px 0;
+    min-height: 80px;
+}
+#quote-text { font-style: italic; color: var(--text-color); }
+#quote-author { display: block; margin-top: 5px; color: var(--primary); font-family: var(--font-code); }
+
 /* Timeline */
 .timeline-item {
     border-left: 2px solid var(--secondary);
@@ -119,6 +138,10 @@ h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
     width: 10px; height: 10px; background: var(--primary); border-radius: 50%;
 }
 .year { font-family: var(--font-code); color: var(--primary); font-size: 0.9rem; margin-bottom: 5px; }
+
+/* Footer */
+footer { text-align: center; padding: 40px 0; color: var(--secondary); font-size: 0.9rem; }
+.hint { font-family: var(--font-code); font-size: 0.8rem; opacity: 0.7; margin-top: 10px; }
 
 /* Terminal */
 #terminal-overlay {
@@ -151,5 +174,8 @@ h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
 @keyframes blink { 50% { opacity: 0; } }
 @media (max-width: 768px) {
     h1 { font-size: 2.5rem; }
-    .hero-section { padding: 0 20px; }
+    .hero-section { padding: 0 20px; flex-direction: column; justify-content: center; text-align: center; }
+    .cta-buttons { display: flex; flex-direction: column; gap: 10px; }
+    .btn.primary { margin-right: 0; }
+    .navbar { padding: 20px; }
 }
