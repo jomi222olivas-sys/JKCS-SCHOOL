@@ -22,9 +22,9 @@
         <section id="hero" class="hero-section">
             <div class="hero-content">
                 <p class="subtitle">Hola, soy Jose Olivas Rios</p>
-                <h1 class="glitch-text" data-text="Aspiring Engineer">Aspiring Engineer</h1>
-                <h2 id="typing-text"></h2>
-                <p class="description">Estudiante de Maryvale (12 años) explorando la intersección entre lógica, creatividad y código.</p>
+                <h1>I Build <span id="typing-text" class="highlight"></span><span class="cursor">|</span></h1>
+                
+                <p class="description">Estudiante de Maryvale (12 años). Autodidacta en Álgebra y Código. Explorando la lógica detrás de las soluciones.</p>
                 
                 <div class="cta-buttons">
                     <a href="https://github.com/jomi222olivas-sys" target="_blank" class="btn primary">
@@ -46,11 +46,11 @@
                 </div>
                 <div class="timeline-item">
                     <div class="year">Late 2024 💻</div>
-                    <div class="content">Dominando HTML/CSS y Manipulación del DOM. Rompiendo código para aprender a arreglarlo.</div>
+                    <div class="content">Dominando HTML/CSS y DOM. Rompiendo código para entender cómo arreglarlo.</div>
                 </div>
                 <div class="timeline-item">
                     <div class="year">2025 🎓</div>
-                    <div class="content">Explorando Algoritmos y aplicando a la beca JKC.</div>
+                    <div class="content">AMS Flower Student. Aplicando a la beca JKC.</div>
                 </div>
             </div>
         </section>
@@ -71,9 +71,9 @@
                         <i class="fas fa-sort-amount-down"></i>
                         <h4>Visualizador Bubble Sort</h4>
                     </div>
-                    <p>Visualizando la complejidad de tiempo O(n²) en tiempo real.</p>
+                    <p>Visualizando la complejidad O(n²) en tiempo real.</p>
                     <div id="visualizer-container" class="bars-container"></div>
-                    <button onclick="startBubbleSort()" class="btn small">Ejecutar Sort</button>
+                    <button onclick="startBubbleSort()" class="btn small mt-20">Ejecutar Sort</button>
                 </div>
 
                 <div class="project-card">
@@ -81,14 +81,19 @@
                         <i class="fas fa-map-marker-alt"></i>
                         <h4>Maryvale Finder</h4>
                     </div>
-                    <p>Lógica de filtrado para encontrar recursos en el Zip 85019.</p>
+                    <p>Lógica de filtrado para el Zip 85019.</p>
                     <select id="resource-filter" onchange="filterResources()">
                         <option value="all">Todos</option>
                         <option value="library">Bibliotecas</option>
                         <option value="wifi">WiFi Gratis</option>
+                        <option value="school">Escuela</option>
                     </select>
+                    
                     <ul id="resource-list" class="resource-list">
-                        </ul>
+                        <li>📚 <strong>Palo Verde Library:</strong> Quiet study area.</li>
+                        <li>🏫 <strong>AMS Flower:</strong> My academic base.</li>
+                        <li>☕ <strong>Starbucks 51st Ave:</strong> Coding sprints spot.</li>
+                    </ul>
                 </div>
 
                 <div class="project-card">
@@ -108,7 +113,8 @@
 
     <footer id="contact">
         <p>Hecho con ❤️ y ☕ por Jose Olivas Rios.</p>
-        <p class="hint">Dev Hint: Presiona la tecla <code>~</code> para acceder a la terminal.</p>
+        <p class="hint">Dev Hint: Presiona la tecla <code>~</code> para hackear la matrix.</p>
+        <button id="music-btn" title="Click for logic vibes">🎵</button>
     </footer>
 
     <div id="terminal-overlay" class="hidden">
@@ -123,7 +129,7 @@
                 <button onclick="toggleTerminal()" class="close-term">×</button>
             </div>
             <div class="terminal-body" id="terminal-body">
-                <div class="output">Welcome to Jose's Terminal v2.0.0</div>
+                <div class="output">Welcome to JO.SYS Terminal v2.1</div>
                 <div class="output">Type 'help' to see available commands.</div>
                 <div class="input-line">
                     <span class="prompt">jose@dev:~$</span>
