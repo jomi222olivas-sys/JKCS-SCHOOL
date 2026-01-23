@@ -1,141 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portfolio of Jose Olivas Rios - JKC Scholar Applicant">
+    <title>Jose Olivas | Young Scholar Portfolio</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <title>Jose Olivas Rios | Young Scholar Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <header>
+            <div class="logo">JO<span class="dot">.</span>SYS</div>
+            <nav>
+                <button id="theme-toggle" class="btn-icon">☀️</button>
+            </nav>
+        </header>
 
-    <nav id="navbar" role="navigation" aria-label="Main Navigation">
-        <div class="logo">Jose Olivas Rios</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#portfolio">Projects</a></li>
-            <li><a href="#community">Community</a></li>
-        </ul>
-        <button id="theme-toggle" aria-label="Toggle Dark Mode">🌙</button>
-    </nav>
-
-    <section id="home" class="hero">
-        <div class="hero-content">
-            <h1>Hello, I'm <span class="highlight">JOSE OLIVAS RIOS</span></h1>
-            <h2 class="typewrite">I am a <span class="txt-type" data-wait="2000" data-words='["Full Stack Developer", "Maryvale Student", "Future Engineer"]'></span></h2>
-            <p class="hero-text">Building the future with code. Press '<strong>~</strong>' (tilde) to enter Hacker Mode.</p>
-            <a href="#portfolio" class="btn-main" aria-label="Go to projects section">View My Projects</a>
-        </div>
-    </section>
-
-    <section id="about" class="section-padding">
-        <h2 class="section-title">About Me & Skills</h2>
-        <div class="about-grid" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 40px; max-width: 1000px; margin: auto;">
-            
-            <div class="about-text" style="flex: 1; min-width: 300px; text-align: left;">
-                <p>
-                    I am 12 years old and passionate about the intersection of logic and creativity. While mastering Algebra in school, I apply computational logic to my personal projects. My goal isn't just to learn to code, but to code solutions. This website was built from scratch—no templates—to prove that age is just a number, but clean code is a universal language.
-                </p>
-                <div style="margin-top: 20px;">
-                    <h3>My Journey</h3>
-                    <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
-                        <li style="margin-bottom: 10px;"><strong>🚀 2024:</strong> Started with Python & Logic loops.</li>
-                        <li style="margin-bottom: 10px;"><strong>💻 Late 2024:</strong> Mastered HTML/CSS & DOM Manipulation.</li>
-                        <li><strong>🎓 2025:</strong> Exploring Algorithms & Applying to JKC.</li>
-                    </ul>
-                </div>
+        <section class="hero">
+            <h1>Hello, I'm <span class="highlight">Jose Olivas Rios</span></h1>
+            <h2 class="subtitle">I Build <span class="txt-type" data-wait="2000" data-words='["Logic.", "Solutions.", "The Future."]'></span></h2>
+            <p class="bio">12-Year-Old Aspiring Engineer from Maryvale.</p>
+            <div class="cta-group">
+                <a href="#projects" class="btn-primary">View Projects</a>
+                <a href="#contact" class="btn-secondary">Contact Me</a>
             </div>
+        </section>
 
-            <div class="chart-container" style="flex: 1; min-width: 300px; max-width: 400px;">
-                <canvas id="learningChart" aria-label="Radar chart showing technical skills" role="img"></canvas>
+        <section id="about" class="card">
+            <h3>👨‍💻 About Me</h3>
+            <p>I am a student from Phoenix, Arizona, with a passion for the intersection of logic and creativity.</p>
+            <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
+                <li style="margin-bottom: 10px;"><strong>🚀 2024:</strong> Started with Python & Logic loops.</li>
+                <li style="margin-bottom: 10px;"><strong>💻 Late 2024:</strong> Constantly pushing the limits of HTML/CSS & DOM Manipulation. I love breaking code just to understand the logic of how to fix it.</li>
+                <li><strong>🎓 2025:</strong> Exploring Algorithms & Applying to JKC.</li>
+            </ul>
+        </section>
+
+        <section class="card">
+            <h3>📊 Technical Growth (Chart.js)</h3>
+            <div class="chart-container">
+                <canvas id="learningChart"></canvas>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="portfolio" class="section-padding">
-        <h2 class="section-title">Interactive Projects</h2>
-        <div class="portfolio-grid">
-            
-            <div class="card interactive-card" style="grid-column: span 2;">
-                <div class="card-icon">📊</div>
-                <h3>Algorithm Visualizer: Bubble Sort</h3>
-                <p>Visualizing O(n²) time complexity logic.</p>
-                <div id="array-container" style="display: flex; justify-content: center; align-items: flex-end; height: 100px; margin: 20px 0;"></div>
-                <div class="controls">
-                    <button onclick="generateArray()" class="btn-small" aria-label="Generate new random array">New Array</button>
-                    <button onclick="bubbleSort()" class="btn-small" style="background-color: var(--accent-color);" aria-label="Start sorting animation">Start Sort</button>
-                </div>
-            </div>
+        <section id="projects" class="card">
+            <h3>🔄 Algorithm Visualizer (Bubble Sort)</h3>
+            <p>Visualizing O(n²) time complexity logic.</p>
+            <div id="array-container" class="array-container"></div>
+            <button onclick="bubbleSort()" class="btn-primary" style="margin-top:15px;">Run Sort Algorithm</button>
+        </section>
 
-            <div class="card">
-                <div class="card-icon">📡</div>
-                <h3>Daily Tech Wisdom</h3>
-                <p>Fetches real-time data from an external API.</p>
-                <div id="quote-box" style="margin-top: 15px; font-style: italic;">
-                    <p id="quote-text">Loading inspiration...</p>
-                    <small id="quote-author" style="display:block; margin-top:10px; font-weight:bold;"></small>
-                </div>
-                <button onclick="getQuote()" class="btn-small" style="margin-top: 15px;" aria-label="Get a new quote">New Quote</button>
-            </div>
+        <section class="card">
+            <h3>📍 Maryvale Resource Finder</h3>
+            <p>Filtering logic to find study spots in Zip Code 85019.</p>
+            <input type="text" id="resourceInput" onkeyup="filterResources()" placeholder="Search (e.g., 'WiFi', 'Library')...">
+            <ul id="resourceList" class="resource-list"></ul>
+        </section>
 
-            <div class="card">
-                <div class="card-icon">📍</div>
-                <h3>Maryvale Resource Finder</h3>
-                <p>Find free Wi-Fi and study spots in 85019.</p>
-                <input type="text" id="resourceInput" onkeyup="filterResources()" placeholder="Search (e.g., Library, Wi-Fi)..." aria-label="Search resources">
-                <ul id="resourceList" class="resource-list"></ul>
-            </div>
+        <section class="card">
+            <h3>📡 Real-Time API Data</h3>
+            <blockquote id="quote-box">
+                <p id="quote-text">Fetching data...</p>
+                <footer id="quote-author"></footer>
+            </blockquote>
+            <button onclick="getQuote()" class="btn-secondary">New Quote</button>
+        </section>
 
-            <div class="card">
-                <div class="card-icon">💰</div>
-                <h3>Future Goal Calculator</h3>
-                <p>Financial literacy tool for students.</p>
-                <div class="calc-inputs">
-                    <input type="number" id="weeklySavings" placeholder="Weekly Savings ($)" aria-label="Weekly savings amount">
-                    <input type="number" id="goalCost" placeholder="Goal Cost ($)" aria-label="Goal cost amount">
-                    <button onclick="calculateGoal()" class="btn-small">Calculate</button>
-                </div>
-                <div id="goalResult" class="goal-result"></div>
-                <div class="progress-container"><div id="progressBar" class="progress-bar"></div></div>
-            </div>
+        <footer>
+            <p>Made with ❤️ by Jose Olivas Rios.</p>
+            <p class="hint">Dev Hint: Try pressing the ' ~ ' key.</p>
+            <button onclick="playNote()" style="background:none; border:none; cursor:pointer; font-size:1.5rem;" aria-label="Play a logic note" title="Click for sound">🎵</button>
+        </footer>
+    </div>
 
-            <div class="card">
-                <div class="card-icon">⏱️</div>
-                <h3>Study Focus Tool</h3>
-                <p>25-minute timer for academic discipline.</p>
-                <h1 id="timer-display">25:00</h1>
-                <div class="controls">
-                    <button onclick="startTimer()" class="btn-small" aria-label="Start timer">Start</button>
-                    <button onclick="resetTimer()" class="btn-small" style="background: #e74c3c;" aria-label="Reset timer">Reset</button>
-                </div>
-            </div>
-
-        </div>
-    </section>
-
-    <section id="community" class="section-padding" style="background-color: var(--card-bg); margin-top: 40px;">
-        <h2 class="section-title">Tech for Maryvale</h2>
-        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <p>I believe in open source. Curated resources for my community:</p>
-            <div style="margin-top:20px;">
-                <a href="https://www.freecodecamp.org/" target="_blank" class="btn-small" aria-label="Visit FreeCodeCamp">FreeCodeCamp</a>
-                <a href="https://developer.mozilla.org/" target="_blank" class="btn-small" aria-label="Visit MDN Web Docs">MDN Docs</a>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <p>Made with ❤️ by Jose Olivas Rios.</p>
-        <p class="hint">Dev Hint: Try pressing the ' ~ ' key.</p>
-    </footer>
+    <button id="mobile-term-btn" onclick="toggleTerminal()" aria-label="Open Hacker Terminal">
+        >_
+    </button>
 
     <div id="terminal-overlay" class="terminal-overlay hidden" aria-hidden="true">
         <div class="terminal-window">
             <div class="terminal-header">
-                <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-                <span class="terminal-title">bash -- jose@developer</span>
+                <div class="red-dot"></div>
+                <div class="yellow-dot"></div>
+                <div class="green-dot"></div>
+                <span>user@jomi-sys: ~</span>
             </div>
             <div class="terminal-body" id="terminal-body">
                 <p>Welcome to Jose's Terminal v1.0.0</p>
@@ -145,18 +93,10 @@
                     <input type="text" id="terminal-input" autocomplete="off" aria-label="Terminal input">
                 </div>
             </div>
+            <button onclick="toggleTerminal()" class="btn-small" style="margin: 10px; background: #ff4444; color: white; border: none; padding: 5px 10px; cursor: pointer;">Exit Terminal</button>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
-
-/**
- *               -------
- *  ----------  |    0  |
- * /          \/ ______\|
- * |          / /
- * |___________/
- * |_||_| |_||_|
- */
