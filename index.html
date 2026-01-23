@@ -1,99 +1,130 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jose Olivas | Young Scholar Portfolio</title>
+    <title>Jose Olivas | Future Engineer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <div class="logo">JO<span class="dot">.</span>SYS</div>
-            <nav>
-                <button id="theme-toggle" class="btn-icon">☀️</button>
-            </nav>
-        </header>
 
-        <section class="hero">
-            <h1>Hello, I'm <span class="highlight">Jose Olivas Rios</span></h1>
-            <h2 class="subtitle">I Build <span class="txt-type" data-wait="2000" data-words='["Logic.", "Solutions.", "The Future."]'></span></h2>
-            <p class="bio">12-Year-Old Aspiring Engineer from Maryvale.</p>
-            <div class="cta-group">
-                <a href="#projects" class="btn-primary">View Projects</a>
-                <a href="#contact" class="btn-secondary">Contact Me</a>
-            </div>
-        </section>
+    <nav class="navbar">
+        <div class="logo">JO.SYS <span class="blink">_</span></div>
+        <div class="nav-links">
+            <button id="theme-toggle" aria-label="Cambiar tema"><i class="fas fa-moon"></i></button>
+        </div>
+    </nav>
 
-        <section id="about" class="card">
-            <h3>👨‍💻 About Me</h3>
-            <p>I am a student from Phoenix, Arizona, with a passion for the intersection of logic and creativity.</p>
-            <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
-                <li style="margin-bottom: 10px;"><strong>🚀 2024:</strong> Started with Python & Logic loops.</li>
-                <li style="margin-bottom: 10px;"><strong>💻 Late 2024:</strong> Constantly pushing the limits of HTML/CSS & DOM Manipulation. I love breaking code just to understand the logic of how to fix it.</li>
-                <li><strong>🎓 2025:</strong> Exploring Algorithms & Applying to JKC.</li>
-            </ul>
-        </section>
-
-        <section class="card">
-            <h3>📊 Technical Growth (Chart.js)</h3>
-            <div class="chart-container">
-                <canvas id="learningChart"></canvas>
-            </div>
-        </section>
-
-        <section id="projects" class="card">
-            <h3>🔄 Algorithm Visualizer (Bubble Sort)</h3>
-            <p>Visualizing O(n²) time complexity logic.</p>
-            <div id="array-container" class="array-container"></div>
-            <button onclick="bubbleSort()" class="btn-primary" style="margin-top:15px;">Run Sort Algorithm</button>
-        </section>
-
-        <section class="card">
-            <h3>📍 Maryvale Resource Finder</h3>
-            <p>Filtering logic to find study spots in Zip Code 85019.</p>
-            <input type="text" id="resourceInput" onkeyup="filterResources()" placeholder="Search (e.g., 'WiFi', 'Library')...">
-            <ul id="resourceList" class="resource-list"></ul>
-        </section>
-
-        <section class="card">
-            <h3>📡 Real-Time API Data</h3>
-            <blockquote id="quote-box">
-                <p id="quote-text">Fetching data...</p>
-                <footer id="quote-author"></footer>
-            </blockquote>
-            <button onclick="getQuote()" class="btn-secondary">New Quote</button>
-        </section>
-
-        <footer>
-            <p>Made with ❤️ by Jose Olivas Rios.</p>
-            <p class="hint">Dev Hint: Try pressing the ' ~ ' key.</p>
-            <button onclick="playNote()" style="background:none; border:none; cursor:pointer; font-size:1.5rem;" aria-label="Play a logic note" title="Click for sound">🎵</button>
-        </footer>
-    </div>
-
-    <button id="mobile-term-btn" onclick="toggleTerminal()" aria-label="Open Hacker Terminal">
-        >_
-    </button>
-
-    <div id="terminal-overlay" class="terminal-overlay hidden" aria-hidden="true">
-        <div class="terminal-window">
-            <div class="terminal-header">
-                <div class="red-dot"></div>
-                <div class="yellow-dot"></div>
-                <div class="green-dot"></div>
-                <span>user@jomi-sys: ~</span>
-            </div>
-            <div class="terminal-body" id="terminal-body">
-                <p>Welcome to Jose's Terminal v1.0.0</p>
-                <p>Type 'help' to see available commands.</p>
-                <div class="terminal-input-line">
-                    <span class="prompt">jose@dev:~$</span>
-                    <input type="text" id="terminal-input" autocomplete="off" aria-label="Terminal input">
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="hero-content">
+                <p class="subtitle">Hola, soy Jose Olivas Rios</p>
+                <h1 class="glitch-text" data-text="Aspiring Engineer">Aspiring Engineer</h1>
+                <h2 id="typing-text"></h2>
+                <p class="description">Estudiante de Maryvale (12 años) explorando la intersección entre lógica, creatividad y código.</p>
+                <div class="cta-buttons">
+                    <a href="#projects" class="btn primary">Ver Proyectos <i class="fas fa-arrow-right"></i></a>
+                    <a href="#contact" class="btn secondary">Contactar</a>
                 </div>
             </div>
-            <button onclick="toggleTerminal()" class="btn-small" style="margin: 10px; background: #ff4444; color: white; border: none; padding: 5px 10px; cursor: pointer;">Exit Terminal</button>
+        </section>
+
+        <section id="about" class="container">
+            <h3 class="section-title"><span>01.</span> Sobre Mí</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="year">2024 🚀</div>
+                    <div class="content">Inicio con Python y bucles lógicos.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">Late 2024 💻</div>
+                    <div class="content">Dominando HTML/CSS y Manipulación del DOM. Rompiendo código para aprender a arreglarlo.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="year">2025 🎓</div>
+                    <div class="content">Explorando Algoritmos y aplicando a la beca JKC.</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skills" class="container">
+            <h3 class="section-title"><span>02.</span> Crecimiento Técnico</h3>
+            <div class="chart-container">
+                <canvas id="skillsChart"></canvas>
+            </div>
+        </section>
+
+        <section id="projects" class="container">
+            <h3 class="section-title"><span>03.</span> Laboratorio de Código</h3>
+            
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="card-header">
+                        <i class="fas fa-sort-amount-down"></i>
+                        <h4>Visualizador Bubble Sort</h4>
+                    </div>
+                    <p>Visualizando la complejidad de tiempo O(n²) en tiempo real.</p>
+                    <div id="visualizer-container" class="bars-container"></div>
+                    <button onclick="startBubbleSort()" class="btn small">Ejecutar Sort</button>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-header">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h4>Maryvale Finder</h4>
+                    </div>
+                    <p>Lógica de filtrado para encontrar recursos en el Zip 85019.</p>
+                    <select id="resource-filter" onchange="filterResources()">
+                        <option value="all">Todos</option>
+                        <option value="library">Bibliotecas</option>
+                        <option value="wifi">WiFi Gratis</option>
+                    </select>
+                    <ul id="resource-list" class="resource-list">
+                        </ul>
+                </div>
+
+                <div class="project-card">
+                    <div class="card-header">
+                        <i class="fas fa-satellite-dish"></i>
+                        <h4>Real-Time Data</h4>
+                    </div>
+                    <div class="quote-box">
+                        <p id="quote-text">"Cargando inspiración..."</p>
+                        <small id="quote-author"></small>
+                    </div>
+                    <button onclick="fetchQuote()" class="btn small">Nueva Quote</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <p>Hecho con ❤️ y ☕ por Jose Olivas Rios.</p>
+        <p class="hint">Dev Hint: Presiona la tecla <code>~</code> para acceder a la terminal.</p>
+    </footer>
+
+    <div id="terminal-overlay" class="hidden">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="dots">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                </div>
+                <span>user@jomi-sys: ~</span>
+                <button onclick="toggleTerminal()" class="close-term">×</button>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="output">Welcome to Jose's Terminal v2.0.0</div>
+                <div class="output">Type 'help' to see available commands.</div>
+                <div class="input-line">
+                    <span class="prompt">jose@dev:~$</span>
+                    <input type="text" id="terminal-input" autocomplete="off" autofocus>
+                </div>
+            </div>
         </div>
     </div>
 
