@@ -1,5 +1,8 @@
-// Typing Effect
-const roles = ["Student @ Maryvale", "Python Enthusiast", "Logic Builder"];
+// 🕵️‍♂️ Secret Message for Developers
+console.log("%c Hello Dev! 👋 If you're looking at this, you found the logic behind the magic. Let's build something cool.", "color: #64ffda; font-size: 16px; font-weight: bold; background: #112240; padding: 10px; border-radius: 5px;");
+
+// Typing Effect - Completando frases "I Build..."
+const phrases = ["Logic.", "Solutions.", "The Future.", "My Own Path."];
 let roleIndex = 0;
 let charIndex = 0;
 let isDeleting = false;
@@ -8,58 +11,63 @@ const deleteSpeed = 50;
 const pause = 2000;
 
 function typeWriter() {
-    const currentRole = roles[roleIndex];
+    const currentPhrase = phrases[roleIndex];
     const element = document.getElementById("typing-text");
     
     if (isDeleting) {
-        element.textContent = currentRole.substring(0, charIndex - 1);
+        element.textContent = currentPhrase.substring(0, charIndex - 1);
         charIndex--;
     } else {
-        element.textContent = currentRole.substring(0, charIndex + 1);
+        element.textContent = currentPhrase.substring(0, charIndex + 1);
         charIndex++;
     }
 
     let typeDelay = isDeleting ? deleteSpeed : typeSpeed;
 
-    if (!isDeleting && charIndex === currentRole.length) {
+    if (!isDeleting && charIndex === currentPhrase.length) {
         typeDelay = pause;
         isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
         isDeleting = false;
-        roleIndex = (roleIndex + 1) % roles.length;
+        roleIndex = (roleIndex + 1) % phrases.length;
     }
 
     setTimeout(typeWriter, typeDelay);
 }
 document.addEventListener('DOMContentLoaded', typeWriter);
 
-// Chart.js
-const ctx = document.getElementById('skillsChart').getContext('2d');
-new Chart(ctx, {
-    type: 'radar',
-    data: {
-        labels: ['HTML/CSS', 'Python', 'Logic', 'Creativity', 'Debugging'],
-        datasets: [{
-            label: 'Skill Level',
-            data: [90, 75, 85, 95, 80],
-            backgroundColor: 'rgba(100, 255, 218, 0.2)',
-            borderColor: '#64ffda',
-            pointBackgroundColor: '#64ffda',
-            borderWidth: 2
-        }]
-    },
-    options: {
-        scales: {
-            r: {
-                angleLines: { color: 'rgba(136, 146, 176, 0.2)' },
-                grid: { color: 'rgba(136, 146, 176, 0.2)' },
-                pointLabels: { color: '#8892b0' },
-                ticks: { display: false }
-            }
+// Chart.js - Asegurando que cargue
+try {
+    const ctx = document.getElementById('skillsChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: ['HTML/CSS', 'Math/Algebra', 'Logic', 'Creativity', 'Debugging'],
+            datasets: [{
+                label: 'Skill Level',
+                data: [90, 85, 85, 95, 80],
+                backgroundColor: 'rgba(100, 255, 218, 0.2)',
+                borderColor: '#64ffda',
+                pointBackgroundColor: '#64ffda',
+                borderWidth: 2
+            }]
         },
-        plugins: { legend: { display: false } }
-    }
-});
+        options: {
+            scales: {
+                r: {
+                    angleLines: { color: 'rgba(136, 146, 176, 0.2)' },
+                    grid: { color: 'rgba(136, 146, 176, 0.2)' },
+                    pointLabels: { color: '#8892b0', font: { size: 12 } },
+                    ticks: { display: false, backdropColor: 'transparent' }
+                }
+            },
+            plugins: { legend: { display: false } },
+            maintainAspectRatio: false
+        }
+    });
+} catch (error) {
+    console.error("Chart failed to load:", error);
+}
 
 // Bubble Sort Visualizer
 const container = document.getElementById("visualizer-container");
@@ -83,7 +91,6 @@ async function startBubbleSort() {
     let bars = document.getElementsByClassName("bar");
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array.length - i - 1; j++) {
-            // Color de comparación (Rojo)
             bars[j].style.background = "#e74c3c"; 
             bars[j+1].style.background = "#e74c3c";
             
@@ -98,37 +105,43 @@ async function startBubbleSort() {
                 bars[j+1].style.height = `${array[j+1]}%`;
             }
             
-            // Regresar al color normal
             bars[j].style.background = "#8892b0"; 
             bars[j+1].style.background = "#8892b0";
         }
-        // Color ordenado (Verde)
         bars[array.length - i - 1].style.background = "#64ffda"; 
     }
     bars[0].style.background = "#64ffda";
 }
 
-// Resource Finder
+// Resource Finder Data (Sincronizado con HTML)
 const resources = [
-    { name: "Maryvale Library", type: "library", address: "68th Ave" },
-    { name: "Starbucks WiFi", type: "wifi", address: "Indian School Rd" },
-    { name: "Palo Verde Park", type: "library", address: "Study Spot" }
+    { name: "Palo Verde Library", type: "library", desc: "Quiet study area." },
+    { name: "AMS Flower", type: "school", desc: "My academic base." },
+    { name: "Starbucks 51st Ave", type: "wifi", desc: "Coding sprints spot." },
+    { name: "Maryvale Community Center", type: "library", desc: "Public resources." }
 ];
 
 function filterResources() {
     const filter = document.getElementById("resource-filter").value;
     const list = document.getElementById("resource-list");
+    
+    // Limpiamos la lista para re-renderizar
     list.innerHTML = "";
     
     resources.filter(r => filter === "all" || r.type === filter).forEach(r => {
         let li = document.createElement("li");
-        li.textContent = `${r.name} - ${r.address}`;
-        li.style.padding = "10px 0";
+        li.innerHTML = `<strong>${r.name}:</strong> ${r.desc}`;
+        li.style.padding = "8px 0";
         li.style.borderBottom = "1px solid rgba(136,146,176,0.1)";
+        li.style.color = "var(--secondary)";
+        
+        // Colorear el nombre
+        let strong = li.querySelector("strong");
+        strong.style.color = "var(--primary)";
+        
         list.appendChild(li);
     });
 }
-filterResources();
 
 // API Quote
 async function fetchQuote() {
@@ -138,11 +151,16 @@ async function fetchQuote() {
         document.getElementById('quote-text').innerText = `"${data.content}"`;
         document.getElementById('quote-author').innerText = `- ${data.author}`;
     } catch (e) {
-        document.getElementById('quote-text').innerText = '"Code is poetry."';
-        document.getElementById('quote-author').innerText = "- WordPress";
+        document.getElementById('quote-text').innerText = '"The best error message is the one that never shows up."';
+        document.getElementById('quote-author').innerText = "- Developer Wisdom";
     }
 }
 fetchQuote();
+
+// Music Button Logic
+document.getElementById('music-btn').addEventListener('click', () => {
+    alert("🎹 Practicing logic scales... (Imagine a cool synthwave track playing!)");
+});
 
 // Terminal Logic
 document.addEventListener('keydown', (e) => {
@@ -160,7 +178,6 @@ document.getElementById('terminal-input').addEventListener('keypress', function 
         let cmd = this.value.toLowerCase().trim();
         let output = document.getElementById('terminal-body');
         
-        // Agregar línea de comando previa
         let prevLine = document.createElement('div');
         prevLine.textContent = `jose@dev:~$ ${cmd}`;
         prevLine.style.color = '#8892b0';
@@ -169,19 +186,29 @@ document.getElementById('terminal-input').addEventListener('keypress', function 
 
         let response = document.createElement('div');
         response.style.marginBottom = '10px';
+        response.style.lineHeight = '1.4';
 
+        // 🧠 LÓGICA PERSONALIZADA AQUI
         switch(cmd) {
             case 'help':
-                response.innerHTML = "Available commands: <br>- whoami: About me<br>- projects: List projects<br>- clear: Clear screen<br>- exit: Close terminal";
+                response.innerHTML = "Available commands: <br>- whoami: About me<br>- math: My math journey<br>- piano: My hobby<br>- school: Education<br>- clear: Clear screen<br>- exit: Close terminal";
                 break;
             case 'whoami':
                 response.textContent = "Jose Olivas. 12yo. Future Engineer.";
                 break;
-            case 'projects':
-                response.textContent = "Loading projects... [Bubble Sort, Maryvale Finder, Portfolio]";
+            case 'math':
+                response.textContent = "🧮 Math is my playground. Taught myself Algebra in 6th grade because standard classes weren't fast enough.";
+                response.style.color = "#ffbd2e"; // Yellow
+                break;
+            case 'piano':
+                response.textContent = "🎹 Turning noise into music. Still looking for a teacher, but I learn by ear.";
+                response.style.color = "#ff5f56"; // Red
+                break;
+            case 'school':
+                response.textContent = "🏫 AMS Flower student. Top of the class, ready for more advanced challenges.";
+                response.style.color = "#27c93f"; // Green
                 break;
             case 'clear':
-                // Nota: Esto limpia visualmente pero mantiene el input
                 Array.from(output.children).forEach(child => {
                     if(!child.classList.contains('input-line')) child.style.display = 'none';
                 });
@@ -192,7 +219,7 @@ document.getElementById('terminal-input').addEventListener('keypress', function 
                 this.value = '';
                 return;
             default:
-                response.textContent = `Command not found: ${cmd}`;
+                response.textContent = `Command not found: ${cmd}. Type 'help'.`;
                 response.style.color = '#ff5f56';
         }
         
