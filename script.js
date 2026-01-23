@@ -83,7 +83,8 @@ async function startBubbleSort() {
     let bars = document.getElementsByClassName("bar");
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array.length - i - 1; j++) {
-            bars[j].style.background = "#e74c3c"; // Comparando
+            // Color de comparación (Rojo)
+            bars[j].style.background = "#e74c3c"; 
             bars[j+1].style.background = "#e74c3c";
             
             await new Promise(r => setTimeout(r, 100));
@@ -97,10 +98,12 @@ async function startBubbleSort() {
                 bars[j+1].style.height = `${array[j+1]}%`;
             }
             
-            bars[j].style.background = "#8892b0"; // Reset
+            // Regresar al color normal
+            bars[j].style.background = "#8892b0"; 
             bars[j+1].style.background = "#8892b0";
         }
-        bars[array.length - i - 1].style.background = "#64ffda"; // Ordenado
+        // Color ordenado (Verde)
+        bars[array.length - i - 1].style.background = "#64ffda"; 
     }
     bars[0].style.background = "#64ffda";
 }
@@ -130,12 +133,13 @@ filterResources();
 // API Quote
 async function fetchQuote() {
     try {
-        const res = await fetch('https://api.quotable.io/random?tags=technology,science');
+        const res = await fetch('https://api.quotable.io/random?tags=technology');
         const data = await res.json();
         document.getElementById('quote-text').innerText = `"${data.content}"`;
         document.getElementById('quote-author').innerText = `- ${data.author}`;
     } catch (e) {
         document.getElementById('quote-text').innerText = '"Code is poetry."';
+        document.getElementById('quote-author').innerText = "- WordPress";
     }
 }
 fetchQuote();
@@ -177,8 +181,10 @@ document.getElementById('terminal-input').addEventListener('keypress', function 
                 response.textContent = "Loading projects... [Bubble Sort, Maryvale Finder, Portfolio]";
                 break;
             case 'clear':
-                output.innerHTML = '<div class="input-line"><span class="prompt">jose@dev:~$</span><input type="text" id="terminal-input" autocomplete="off" autofocus></div>';
-                document.getElementById('terminal-input').focus(); // Re-focus logic needed here properly in real implementation
+                // Nota: Esto limpia visualmente pero mantiene el input
+                Array.from(output.children).forEach(child => {
+                    if(!child.classList.contains('input-line')) child.style.display = 'none';
+                });
                 this.value = '';
                 return; 
             case 'exit':
