@@ -1,7 +1,7 @@
 // 🕵️‍♂️ Secret Message for Developers
 console.log("%c Hand-coded by Jose Olivas. 100% Grit.", "color: #64ffda; font-size: 16px; font-weight: bold; background: #112240; padding: 10px; border-radius: 5px;");
 
-// Typing Effect - STRATEGIC MESSAGING
+// 1. Typing Effect Logic
 const phrases = [
     "I Build Logic.",
     "I Solve Problems.",
@@ -41,11 +41,13 @@ function typeWriter() {
 }
 document.addEventListener('DOMContentLoaded', typeWriter);
 
-// Bubble Sort Visualizer
+// 2. Bubble Sort Visualizer (Fixed: Prevent Multiple Clicks)
 const container = document.getElementById("visualizer-container");
 let array = [];
+let isSorting = false;
 
 function generateArray() {
+    if(isSorting) return;
     container.innerHTML = "";
     array = [];
     for(let i=0; i<10; i++){
@@ -57,9 +59,16 @@ function generateArray() {
         container.appendChild(bar);
     }
 }
+// Generate initial array
 generateArray();
 
 async function startBubbleSort() {
+    if(isSorting) return; // Prevent double clicking
+    isSorting = true;
+    const btn = document.getElementById("sort-btn");
+    btn.disabled = true;
+    btn.innerText = "Sorting...";
+
     let bars = document.getElementsByClassName("bar");
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array.length - i - 1; j++) {
@@ -83,9 +92,14 @@ async function startBubbleSort() {
         bars[array.length - i - 1].style.background = "#64ffda"; // Sorted Green
     }
     bars[0].style.background = "#64ffda";
+    
+    isSorting = false;
+    btn.disabled = false;
+    btn.innerText = "Run Sort Again";
+    setTimeout(generateArray, 2000); // Reset after 2 seconds
 }
 
-// Resource Finder Data (Failsafe)
+// 3. Resource Finder Logic
 const resources = [
     { name: "Palo Verde Library", type: "library", desc: "Quiet study area." },
     { name: "AMS Flower", type: "school", desc: "My academic base." },
@@ -110,26 +124,114 @@ function filterResources() {
         list.appendChild(li);
     });
 }
+// Init list on load
+filterResources();
 
-// API Quote
+// 4. API Quote (Safe Fetch)
 async function fetchQuote() {
+    const quoteText = document.getElementById('quote-text');
+    const quoteAuthor = document.getElementById('quote-author');
+    
+    quoteText.innerText = "Loading...";
+    quoteAuthor.innerText = "";
+
     try {
         const res = await fetch('https://api.quotable.io/random?tags=technology');
+        if (!res.ok) throw new Error("API Limit");
         const data = await res.json();
-        document.getElementById('quote-text').innerText = `"${data.content}"`;
-        document.getElementById('quote-author').innerText = `- ${data.author}`;
+        quoteText.innerText = `"${data.content}"`;
+        quoteAuthor.innerText = `- ${data.author}`;
     } catch (e) {
-        document.getElementById('quote-text').innerText = '"The best error message is the one that never shows up."';
-        document.getElementById('quote-author').innerText = "- Developer Wisdom";
+        // Fallback if API fails
+        quoteText.innerText = '"The best error message is the one that never shows up."';
+        quoteAuthor.innerText = "- Developer Wisdom";
     }
 }
 fetchQuote();
 
-// Music Button Logic
+// 5. Music Button
 document.getElementById('music-btn').addEventListener('click', () => {
     alert("🎹 Practicing logic scales... (Imagine a cool synthwave track playing!)");
 });
 
-// Terminal Logic - THE INTERACTIVE BIOGRAPHY
+// 6. Terminal Logic (Robust)
 document.addEventListener('keydown', (e) => {
-    if
+    if (e.key === '~') toggleTerminal();
+});
+
+function toggleTerminal() {
+    const term = document.getElementById('terminal-overlay');
+    term.classList.toggle('hidden');
+    if (!term.classList.contains('hidden')) document.getElementById('terminal-input').focus();
+}
+
+document.getElementById('terminal-input').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        let cmd = this.value.toLowerCase().trim();
+        let output = document.getElementById('terminal-body');
+        
+        // Add previous command line
+        let prevLine = document.createElement('div');
+        prevLine.textContent = `jose@dev:~$ ${cmd}`;
+        prevLine.style.color = '#8892b0';
+        prevLine.style.marginTop = '10px';
+        output.insertBefore(prevLine, this.parentElement);
+
+        let response = document.createElement('div');
+        response.style.marginBottom = '10px';
+        response.style.lineHeight = '1.5';
+
+        // Commands Logic
+        switch(cmd) {
+            case 'help':
+                response.innerHTML = "Available commands: <br> > <span style='color:#64ffda'>about</span> <br> > <span style='color:#64ffda'>math</span> <br> > <span style='color:#64ffda'>piano</span> <br> > <span style='color:#64ffda'>why_jkcf</span> <br> > clear <br> > exit";
+                break;
+            case 'about':
+                response.innerHTML = "<strong>Name:</strong> Jose Olivas.<br><strong>Location:</strong> Maryvale, Phoenix.<br><strong>Status:</strong> Ready to learn. <br><strong>Goal:</strong> Engineering.";
+                break;
+            case 'math':
+                response.textContent = "🧮 Math is my playground. I taught myself Algebra 1 in 6th grade using online resources. It was hard (I struggled at first!), but I loved the challenge of solving problems.";
+                response.style.color = "#ffbd2e"; // Yellow
+                break;
+            case 'piano':
+                response.textContent = "🎹 My parents gave me a keyboard. I practice every day, but I currently teach myself by ear. I need a teacher to help me turn the noise into real music.";
+                response.style.color = "#ff5f56"; // Red
+                break;
+            case 'why_jkcf':
+                response.textContent = "🚀 Because I'm bored with 'easy'. I need a community that pushes me to be better, faster, and smarter. I am ready for the rigor.";
+                response.style.color = "#27c93f"; // Green
+                break;
+            case 'clear':
+                Array.from(output.children).forEach(child => {
+                    if(!child.classList.contains('input-line')) child.style.display = 'none';
+                });
+                this.value = '';
+                return; 
+            case 'exit':
+                toggleTerminal();
+                this.value = '';
+                return;
+            default:
+                response.textContent = `Command not found: ${cmd}. Type 'help' for options.`;
+                response.style.color = '#ff5f56';
+        }
+        
+        output.insertBefore(response, this.parentElement);
+        this.value = '';
+        // Auto scroll to bottom
+        output.scrollTop = output.scrollHeight;
+    }
+});
+
+// Dark/Light Mode
+const toggleBtn = document.getElementById("theme-toggle");
+toggleBtn.addEventListener("click", () => {
+    const currentTheme = document.body.getAttribute("data-theme");
+    if (currentTheme === "light") {
+        document.body.setAttribute("data-theme", "dark");
+        toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    } else {
+        document.body.setAttribute("data-theme", "light");
+        toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+    }
+});
