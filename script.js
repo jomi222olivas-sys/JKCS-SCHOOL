@@ -1,276 +1,210 @@
-/* ========================
-   0. SECRET MESSAGE FOR TECH JUDGES
-   ======================== */
-console.log("%c Hello World! ", "background: #222; color: #00ff00; font-size: 20px; padding: 5px;");
-console.log("I built this site from scratch to apply for the Young Scholars Program.");
-console.log("If you are reading this, thank you for looking strictly at the logic behind the code.");
-console.log("Status: Ready to learn. 🚀");
+// Typing Effect
+const roles = ["Student @ Maryvale", "Python Enthusiast", "Logic Builder"];
+let roleIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typeSpeed = 100;
+const deleteSpeed = 50;
+const pause = 2000;
 
-/* ========================
-   1. GLOBAL & THEME LOGIC
-   ======================== */
-const toggleButton = document.getElementById('theme-toggle');
-if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
-    toggleButton.textContent = '☀️';
-}
-toggleButton.addEventListener('click', () => {
-    let theme = document.documentElement.getAttribute('data-theme');
-    if (theme === 'dark') {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        toggleButton.textContent = '🌙';
-    } else {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        toggleButton.textContent = '☀️';
-    }
-});
-
-/* ========================
-   2. TYPEWRITER EFFECT
-   ======================== */
-const TypeWriter = function(txtElement, words, wait = 3000) {
-    this.txtElement = txtElement;
-    this.words = words;
-    this.txt = '';
-    this.wordIndex = 0;
-    this.wait = parseInt(wait, 10);
-    this.type();
-    this.isDeleting = false;
-}
-TypeWriter.prototype.type = function() {
-    const current = this.wordIndex % this.words.length;
-    const fullTxt = this.words[current];
-    if(this.isDeleting) { this.txt = fullTxt.substring(0, this.txt.length - 1); } 
-    else { this.txt = fullTxt.substring(0, this.txt.length + 1); }
-    this.txtElement.innerHTML = `<span class="txt">${this.txt}</span>`;
-    let typeSpeed = 200;
-    if(this.isDeleting) { typeSpeed /= 2; }
-    if(!this.isDeleting && this.txt === fullTxt) { typeSpeed = this.wait; this.isDeleting = true; } 
-    else if(this.isDeleting && this.txt === '') { this.isDeleting = false; this.wordIndex++; typeSpeed = 500; }
-    setTimeout(() => this.type(), typeSpeed);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const txtElement = document.querySelector('.txt-type');
-    const words = JSON.parse(txtElement.getAttribute('data-words'));
-    const wait = txtElement.getAttribute('data-wait');
-    new TypeWriter(txtElement, words, wait);
+function typeWriter() {
+    const currentRole = roles[roleIndex];
+    const element = document.getElementById("typing-text");
     
-    // Init Features
-    filterResources();
-    generateArray();
-    initChart(); 
-    getQuote();  
+    if (isDeleting) {
+        element.textContent = currentRole.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        element.textContent = currentRole.substring(0, charIndex + 1);
+        charIndex++;
+    }
+
+    let typeDelay = isDeleting ? deleteSpeed : typeSpeed;
+
+    if (!isDeleting && charIndex === currentRole.length) {
+        typeDelay = pause;
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        roleIndex = (roleIndex + 1) % roles.length;
+    }
+
+    setTimeout(typeWriter, typeDelay);
+}
+document.addEventListener('DOMContentLoaded', typeWriter);
+
+// Chart.js
+const ctx = document.getElementById('skillsChart').getContext('2d');
+new Chart(ctx, {
+    type: 'radar',
+    data: {
+        labels: ['HTML/CSS', 'Python', 'Logic', 'Creativity', 'Debugging'],
+        datasets: [{
+            label: 'Skill Level',
+            data: [90, 75, 85, 95, 80],
+            backgroundColor: 'rgba(100, 255, 218, 0.2)',
+            borderColor: '#64ffda',
+            pointBackgroundColor: '#64ffda',
+            borderWidth: 2
+        }]
+    },
+    options: {
+        scales: {
+            r: {
+                angleLines: { color: 'rgba(136, 146, 176, 0.2)' },
+                grid: { color: 'rgba(136, 146, 176, 0.2)' },
+                pointLabels: { color: '#8892b0' },
+                ticks: { display: false }
+            }
+        },
+        plugins: { legend: { display: false } }
+    }
 });
 
-/* ========================
-   3. CHART.JS VISUALIZATION
-   ======================== */
-function initChart() {
-    const ctx = document.getElementById('learningChart').getContext('2d');
-    const textColor = '#666'; 
-    const gridColor = '#999';
+// Bubble Sort Visualizer
+const container = document.getElementById("visualizer-container");
+let array = [];
 
-    new Chart(ctx, {
-        type: 'radar',
-        data: {
-            labels: ['HTML5', 'CSS/Design', 'JavaScript', 'Python', 'Logic', 'Problem Solving'],
-            datasets: [{
-                label: 'Skill Level (Growth Mindset)',
-                data: [90, 85, 80, 60, 95, 100],
-                backgroundColor: 'rgba(0, 123, 255, 0.2)', 
-                borderColor: 'rgba(0, 123, 255, 1)',      
-                borderWidth: 2,
-                pointBackgroundColor: 'rgba(0, 123, 255, 1)'
-            }]
-        },
-        options: {
-            scales: {
-                r: {
-                    angleLines: { color: gridColor },
-                    grid: { color: 'rgba(150, 150, 150, 0.3)' },
-                    pointLabels: { color: textColor, font: { size: 12, weight: 'bold' } },
-                    suggestedMin: 0, suggestedMax: 100, ticks: { display: false }
-                }
-            },
-            plugins: { legend: { display: false } }
-        }
-    });
-}
-
-/* ========================
-   4. API FETCH (QUOTES)
-   ======================== */
-async function getQuote() {
-    const textElem = document.getElementById('quote-text');
-    const authorElem = document.getElementById('quote-author');
-    try {
-        const response = await fetch('https://api.quotable.io/random?tags=technology,science');
-        const data = await response.json();
-        textElem.innerText = `"${data.content}"`;
-        authorElem.innerText = `- ${data.author}`;
-    } catch (error) {
-        textElem.innerText = "The code works, but the network is shy today.";
-        authorElem.innerText = "- Jose's Fallback System";
-    }
-}
-
-/* ========================
-   5. ALGORITHM VISUALIZER
-   ======================== */
-const container = document.getElementById("array-container");
-let bars = [];
-function generateArray(num = 15) {
-    container.innerHTML = ''; bars = [];
-    for (let i = 0; i < num; i++) {
-        const value = Math.floor(Math.random() * 80) + 10; 
-        const bar = document.createElement("div");
-        bar.style.height = `${value}px`;
-        bar.style.width = "10px";
-        bar.style.margin = "0 2px";
-        bar.style.background = "var(--primary-color)";
+function generateArray() {
+    container.innerHTML = "";
+    array = [];
+    for(let i=0; i<10; i++){
+        let val = Math.floor(Math.random() * 80) + 10;
+        array.push(val);
+        let bar = document.createElement("div");
+        bar.style.height = `${val}%`;
+        bar.classList.add("bar");
         container.appendChild(bar);
-        bars.push(bar);
     }
 }
-function sleep(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }
-async function bubbleSort() {
-    const len = bars.length;
-    for (let i = 0; i < len; i++) {
-        for (let j = 0; j < len - i - 1; j++) {
-            bars[j].style.background = "red"; bars[j + 1].style.background = "red";
-            await sleep(50);
-            const h1 = parseInt(bars[j].style.height);
-            const h2 = parseInt(bars[j + 1].style.height);
-            if (h1 > h2) {
-                bars[j].style.height = `${h2}px`; bars[j + 1].style.height = `${h1}px`;
+generateArray();
+
+async function startBubbleSort() {
+    let bars = document.getElementsByClassName("bar");
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array.length - i - 1; j++) {
+            bars[j].style.background = "#e74c3c"; // Comparando
+            bars[j+1].style.background = "#e74c3c";
+            
+            await new Promise(r => setTimeout(r, 100));
+
+            if (array[j] > array[j+1]) {
+                let temp = array[j];
+                array[j] = array[j+1];
+                array[j+1] = temp;
+                
+                bars[j].style.height = `${array[j]}%`;
+                bars[j+1].style.height = `${array[j+1]}%`;
             }
-            bars[j].style.background = "var(--primary-color)"; bars[j + 1].style.background = "var(--primary-color)";
+            
+            bars[j].style.background = "#8892b0"; // Reset
+            bars[j+1].style.background = "#8892b0";
         }
-        bars[len - i - 1].style.background = "green";
+        bars[array.length - i - 1].style.background = "#64ffda"; // Ordenado
     }
-    bars[0].style.background = "green";
+    bars[0].style.background = "#64ffda";
 }
 
-/* ========================
-   6. RESOURCE FINDER (Maryvale Edition)
-   ======================== */
-// Hardcoded curated list for community impact
+// Resource Finder
 const resources = [
-    { name: "Desert Sage Library", type: "Quiet Study / Free WiFi", address: "7602 W Encanto Blvd" },
-    { name: "Maryvale Community Center", type: "Group Projects", address: "4420 N 51st Ave" },
-    { name: "Palo Verde Park", type: "Outdoor Reading", address: "38th Ave & Campbell" },
-    { name: "Cartwright Tech Hub", type: "School Resources", address: "Available for District Students" },
-    { name: "Local Starbucks", type: "WiFi Spot", address: "51st Ave & Indian School" }
+    { name: "Maryvale Library", type: "library", address: "68th Ave" },
+    { name: "Starbucks WiFi", type: "wifi", address: "Indian School Rd" },
+    { name: "Palo Verde Park", type: "library", address: "Study Spot" }
 ];
 
 function filterResources() {
-    const input = document.getElementById('resourceInput').value.toUpperCase();
-    const list = document.getElementById('resourceList');
-    list.innerHTML = ''; 
+    const filter = document.getElementById("resource-filter").value;
+    const list = document.getElementById("resource-list");
+    list.innerHTML = "";
     
-    const filtered = resources.filter(item => 
-        item.name.toUpperCase().includes(input) || item.type.toUpperCase().includes(input)
-    );
-
-    filtered.forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${item.name}</strong> <br> <small>${item.type} | ${item.address}</small>`;
+    resources.filter(r => filter === "all" || r.type === filter).forEach(r => {
+        let li = document.createElement("li");
+        li.textContent = `${r.name} - ${r.address}`;
+        li.style.padding = "10px 0";
+        li.style.borderBottom = "1px solid rgba(136,146,176,0.1)";
         list.appendChild(li);
     });
 }
+filterResources();
 
-/* ========================
-   7. PIANO EASTER EGG
-   ======================== */
-function playNote() {
-    // Plays a sound
-    const audio = new Audio('https://www.soundjay.com/button/beep-07.wav'); 
-    audio.play();
-    // Feedback to user
-    alert("🎵 Trying to turn logic into music. Even without a piano teacher, I keep practicing.");
-}
-
-/* ========================
-   8. TERMINAL HACKER MODE
-   ======================== */
-const terminalOverlay = document.getElementById('terminal-overlay');
-const terminalInput = document.getElementById('terminal-input');
-const terminalBody = document.getElementById('terminal-body');
-
-// Toggle function for Mobile Button
-function toggleTerminal() {
-    terminalOverlay.classList.toggle('hidden');
-    if (!terminalOverlay.classList.contains('hidden')) {
-        terminalInput.focus();
+// API Quote
+async function fetchQuote() {
+    try {
+        const res = await fetch('https://api.quotable.io/random?tags=technology,science');
+        const data = await res.json();
+        document.getElementById('quote-text').innerText = `"${data.content}"`;
+        document.getElementById('quote-author').innerText = `- ${data.author}`;
+    } catch (e) {
+        document.getElementById('quote-text').innerText = '"Code is poetry."';
     }
 }
+fetchQuote();
 
+// Terminal Logic
 document.addEventListener('keydown', (e) => {
-    if (e.key === '~' || e.key === '`') {
-        e.preventDefault(); 
-        toggleTerminal();
+    if (e.key === '~') toggleTerminal();
+});
+
+function toggleTerminal() {
+    const term = document.getElementById('terminal-overlay');
+    term.classList.toggle('hidden');
+    if (!term.classList.contains('hidden')) document.getElementById('terminal-input').focus();
+}
+
+document.getElementById('terminal-input').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        let cmd = this.value.toLowerCase().trim();
+        let output = document.getElementById('terminal-body');
+        
+        // Agregar línea de comando previa
+        let prevLine = document.createElement('div');
+        prevLine.textContent = `jose@dev:~$ ${cmd}`;
+        prevLine.style.color = '#8892b0';
+        prevLine.style.marginTop = '10px';
+        output.insertBefore(prevLine, this.parentElement);
+
+        let response = document.createElement('div');
+        response.style.marginBottom = '10px';
+
+        switch(cmd) {
+            case 'help':
+                response.innerHTML = "Available commands: <br>- whoami: About me<br>- projects: List projects<br>- clear: Clear screen<br>- exit: Close terminal";
+                break;
+            case 'whoami':
+                response.textContent = "Jose Olivas. 12yo. Future Engineer.";
+                break;
+            case 'projects':
+                response.textContent = "Loading projects... [Bubble Sort, Maryvale Finder, Portfolio]";
+                break;
+            case 'clear':
+                output.innerHTML = '<div class="input-line"><span class="prompt">jose@dev:~$</span><input type="text" id="terminal-input" autocomplete="off" autofocus></div>';
+                document.getElementById('terminal-input').focus(); // Re-focus logic needed here properly in real implementation
+                this.value = '';
+                return; 
+            case 'exit':
+                toggleTerminal();
+                this.value = '';
+                return;
+            default:
+                response.textContent = `Command not found: ${cmd}`;
+                response.style.color = '#ff5f56';
+        }
+        
+        output.insertBefore(response, this.parentElement);
+        this.value = '';
+        output.scrollTop = output.scrollHeight;
     }
 });
 
-terminalOverlay.addEventListener('click', (e) => {
-    if (e.target === terminalOverlay) toggleTerminal();
-});
-
-terminalInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') {
-        const command = terminalInput.value.toLowerCase().trim();
-        const output = document.createElement('p');
-        
-        output.innerHTML = `<span style="color:#00ff00">jose@dev:~$</span> ${command}`;
-        terminalBody.insertBefore(output, terminalInput.parentElement);
-
-        let response = '';
-        switch(command) {
-            case 'help': 
-                response = "Available commands: about, math, school, piano, contact, clear, exit"; 
-                break;
-            case 'about': 
-                response = "I am a 12-year-old coding student using logic to solve real-world problems."; 
-                break;
-            case 'math': 
-                response = "> Math is my playground. I taught myself Algebra in 6th grade and now I hunt for geometry problems online."; 
-                break;
-            case 'school': 
-                response = "> AMS Flower is great, but I need more speed. I'm ready for a challenge where 'advanced' is the new normal."; 
-                break;
-            case 'piano': 
-                response = "> I don't have a teacher, but code is my instrument. I try to turn noise into music every day."; 
-                break;
-            case 'contact': 
-                response = "GitHub: jomi222olivas-sys | Location: Maryvale, AZ"; 
-                break;
-            case 'jkcscholar': 
-                response = "ACCESS GRANTED. Status: Highly Motivated Applicant. Determination: 100%"; 
-                break;
-            case 'clear': 
-                terminalBody.innerHTML = ''; 
-                terminalBody.appendChild(terminalInput.parentElement); 
-                response = null; 
-                break;
-            case 'exit': 
-                toggleTerminal(); 
-                response = null; 
-                break;
-            default: 
-                response = `Command not found: ${command}. Type 'help' for options.`;
-        }
-
-        if (response) {
-            const respNode = document.createElement('p');
-            respNode.innerText = response;
-            respNode.style.color = "#ccc";
-            respNode.style.marginLeft = "10px";
-            terminalBody.insertBefore(respNode, terminalInput.parentElement);
-        }
-        terminalInput.value = '';
-        terminalBody.scrollTop = terminalBody.scrollHeight; 
+// Dark/Light Mode
+const toggleBtn = document.getElementById("theme-toggle");
+toggleBtn.addEventListener("click", () => {
+    const currentTheme = document.body.getAttribute("data-theme");
+    if (currentTheme === "light") {
+        document.body.setAttribute("data-theme", "dark");
+        toggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+    } else {
+        document.body.setAttribute("data-theme", "light");
+        toggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
     }
 });
