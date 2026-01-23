@@ -52,9 +52,10 @@ body {
 }
 
 .subtitle { color: var(--primary); font-family: var(--font-code); margin-bottom: 10px; }
-h1 { font-size: 4rem; line-height: 1.1; margin-bottom: 10px; }
-h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
+h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 20px; }
+.highlight { color: var(--primary); }
 .description { max-width: 500px; color: var(--secondary); margin-bottom: 30px; }
+.cursor { animation: blink 1s infinite; color: var(--primary); }
 
 /* Buttons */
 .btn {
@@ -73,8 +74,11 @@ h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
 .btn.secondary { color: var(--text-color); border: 1px solid transparent; }
 .btn.secondary:hover { border: 1px solid var(--text-color); }
 
-.btn.small { font-size: 0.8rem; padding: 8px 16px; margin-top: 15px; border: 1px solid var(--secondary); color: var(--secondary); }
+.btn.small { font-size: 0.8rem; padding: 8px 16px; border: 1px solid var(--secondary); color: var(--secondary); margin-top: 15px; }
 .btn.small:hover { border-color: var(--primary); color: var(--primary); }
+
+/* Utility Classes */
+.mt-20 { margin-top: 20px !important; }
 
 /* Container & Grid */
 .container { max-width: 1000px; margin: 0 auto; padding: 50px 20px; }
@@ -114,7 +118,8 @@ h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
 
 /* Resource List */
 .resource-list { list-style: none; margin-top: 15px; }
-.resource-list li { color: var(--secondary); font-size: 0.9rem; }
+.resource-list li { color: var(--secondary); font-size: 0.9rem; padding: 8px 0; border-bottom: 1px solid rgba(136,146,176,0.1); }
+.resource-list li strong { color: var(--primary); }
 
 /* Quote Box */
 .quote-box {
@@ -140,8 +145,10 @@ h2 { font-size: 2.5rem; color: var(--secondary); margin-bottom: 20px; }
 .year { font-family: var(--font-code); color: var(--primary); font-size: 0.9rem; margin-bottom: 5px; }
 
 /* Footer */
-footer { text-align: center; padding: 40px 0; color: var(--secondary); font-size: 0.9rem; }
+footer { text-align: center; padding: 40px 0; color: var(--secondary); font-size: 0.9rem; display: flex; flex-direction: column; align-items: center;}
 .hint { font-family: var(--font-code); font-size: 0.8rem; opacity: 0.7; margin-top: 10px; }
+#music-btn { background: none; border: none; font-size: 1.5rem; cursor: pointer; margin-top: 15px; transition: transform 0.2s; }
+#music-btn:hover { transform: scale(1.2); }
 
 /* Terminal */
 #terminal-overlay {
@@ -163,7 +170,7 @@ footer { text-align: center; padding: 40px 0; color: var(--secondary); font-size
 .dot { width: 12px; height: 12px; border-radius: 50%; }
 .red { background: #ff5f56; } .yellow { background: #ffbd2e; } .green { background: #27c93f; }
 .terminal-body {
-    padding: 15px; flex: 1; overflow-y: auto; font-family: var(--font-code); color: #fff;
+    padding: 15px; flex: 1; overflow-y: auto; font-family: var(--font-code); color: #fff; text-align: left;
 }
 .input-line { display: flex; }
 .prompt { color: #27c93f; margin-right: 10px; }
